@@ -5,6 +5,7 @@ import pickle
 import torch
 import torch.optim as optim
 import random
+import wandb
 
 from data.data_loading import DataLoader, load_dataset, load_graph_dataset
 from torch_geometric.data import DataLoader as PyGDataLoader
@@ -29,6 +30,9 @@ def main(args):
     print("======================== Args ===========================")
     print(args)
     print("===================================================")
+
+    # initialise wandb
+    wandb.init(config=args)
 
     # Set the seed for everything
     torch.manual_seed(args.seed)
@@ -321,19 +325,23 @@ def main(args):
             epoch_train_curve = train(model, device, train_loader, optimizer, args.task_type)
             train_loss_curve += epoch_train_curve
             epoch_train_loss = float(np.mean(epoch_train_curve))
+            wandb.log({"train_loss": epoch_train_loss}) #
 
             # evaluate model
             print('Evaluating...')
             if epoch == 1 or epoch % args.train_eval_period == 0:
                 train_perf, _ = eval(model, device, train_loader, evaluator, args.task_type)
             train_curve.append(train_perf)
+            wandb.log({"train_loss": epoch_train_loss})
             valid_perf, epoch_val_loss = eval(model, device,
                 valid_loader, evaluator, args.task_type)#, dataset[split_idx["valid"]])
             valid_curve.append(valid_perf)
+            wandb.log({"val_loss": epoch_train_loss, "val_perf": valid_perf})  #
 
             if test_loader is not None:
                 test_perf, epoch_test_loss = eval(model, device, test_loader, evaluator,
                                                   args.task_type)
+                wandb.log({"test_loss": epoch_test_loss, "test_perf": test_perf})
             else:
                 test_perf = np.nan
                 epoch_test_loss = np.nan
