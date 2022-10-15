@@ -183,6 +183,27 @@ class Evaluator(object):
         assert y_pred is not None
         metric = met.accuracy_score(y_true, y_pred)
         return metric
+    def _auc(self, input_dict, **kwargs):
+        y_true = input_dict['y_true']
+        y_pred = np.argmax(input_dict['y_pred'], axis=1)
+        assert y_true is not None
+        assert y_pred is not None
+        metric = met.auc(y_true, y_pred)
+        return metric
+    def _recall(self, input_dict, **kwargs):
+        y_true = input_dict['y_true']
+        y_pred = np.argmax(input_dict['y_pred'], axis=1)
+        assert y_true is not None
+        assert y_pred is not None
+        metric = met.recall_score(y_true, y_pred)
+        return metric
+    def _precision(self, input_dict, **kwargs):
+        y_true = input_dict['y_true']
+        y_pred = np.argmax(input_dict['y_pred'], axis=1)
+        assert y_true is not None
+        assert y_pred is not None
+        metric = met.precision_score(y_true, y_pred)
+        return metric
 
     def _mae(self, input_dict, **kwargs):
         y_true = input_dict['y_true']

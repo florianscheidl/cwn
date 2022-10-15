@@ -332,7 +332,7 @@ def main(args):
             if epoch == 1 or epoch % args.train_eval_period == 0:
                 train_perf, _ = eval(model, device, train_loader, evaluator, args.task_type)
             train_curve.append(train_perf)
-            wandb.log({"train_loss": epoch_train_loss})
+            wandb.log({"train_perf": train_perf})
             valid_perf, epoch_val_loss = eval(model, device,
                 valid_loader, evaluator, args.task_type)#, dataset[split_idx["valid"]])
             valid_curve.append(valid_perf)
