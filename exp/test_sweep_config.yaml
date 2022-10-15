@@ -1,8 +1,8 @@
-program: exp.run_mol_exp.py
+program: exp.run_mol_exp
 command:
   - ${interpreter}
   - ${program}
-  - ${args_no_hyphens}
+  - ${args}
 method: random
 parameters:
   device:
