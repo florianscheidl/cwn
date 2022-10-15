@@ -114,11 +114,9 @@ def get_parser():
                         'used. (default: None)',
                         metavar=metavar)
     parser.add_argument('--dump_curves', action='store_true',
-                        help='whether to dump the training curves to disk',
-                        metavar=metavar)
+                        help='whether to dump the training curves to disk')
     parser.add_argument('--untrained', action='store_true',
-                        help='whether to skip training',
-                        metavar=metavar)
+                        help='whether to skip training')
     parser.add_argument('--fold', type=int, default=None,
                         help='fold index for k-fold cross-validation experiments',
                         metavar=metavar)
@@ -146,18 +144,13 @@ def get_parser():
                         help='What orientation to use for the testing complexes',
                         metavar=metavar)
     parser.add_argument('--fully_orient_invar',  action='store_true',
-                        help='Whether to apply torch.abs from the first layer',
-                        metavar=metavar)
+                        help='Whether to apply torch.abs from the first layer')
     parser.add_argument('--use_edge_features', action='store_true',
-                        help="Use edge features for molecular graphs",
-                        metavar=metavar)
+                        help="Use edge features for molecular graphs")
     parser.add_argument('--simple_features', action='store_true',
-                        help="Whether to use only a subset of original features, specific to ogb-mol*",
-                        metavar=metavar)
-    parser.add_argument('--early_stop', action='store_true', help='Stop when minimum LR is reached.',
-                        metavar=metavar)
-    parser.add_argument('--paraid',  type=int, default=0,
-                        help='model id',
+                        help="Whether to use only a subset of original features, specific to ogb-mol*")
+    parser.add_argument('--early_stop', action='store_true', help='Stop when minimum LR is reached.')
+    parser.add_argument('--paraid',  type=int, default=0,help='model id',
                         metavar=metavar)
     parser.add_argument('--preproc_jobs',  type=int, default=2,
                         help='Jobs to use for the dataset preprocessing. For all jobs use "-1".'
