@@ -3,7 +3,7 @@ command:
   - ${interpreter}
   - "-m"
   - ${program}
-  - ${args}
+  - ${args_hyphens_no_equals} # args
   - "--use_edge_features"
   - "--dump_curves"
   - "--use_coboundaries"
