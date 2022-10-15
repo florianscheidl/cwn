@@ -99,8 +99,7 @@ def get_parser():
                         help='Threshold to define (non-)isomorphism',
                         metavar=metavar)
     parser.add_argument('--minimize', action='store_true',
-                        help='whether to minimize evaluation metric or not',
-                        metavar=metavar)
+                        help='whether to minimize evaluation metric or not')
     parser.add_argument('--max_dim', type=int, default="2",
                         help='maximum cellular dimension (default: 2, i.e. two_cells)',
                         metavar=metavar)
