@@ -1,6 +1,7 @@
 program: exp.run_mol_exp
 command:
   - ${interpreter}
+  - "-m"
   - ${program}
   - ${args}
 method: random

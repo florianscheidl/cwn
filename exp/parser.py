@@ -7,111 +7,163 @@ from definitions import ROOT_DIR
 
 def get_parser():
     parser = argparse.ArgumentParser(description='CWN experiment.')
+    metavar = "KEY=VALUE"
     parser.add_argument('--seed', type=int, default=43,
-                        help='random seed to set (default: 43, i.e. the non-meaning of life))')
+                        help='random seed to set (default: 43, i.e. the non-meaning of life))',
+                        metavar=metavar)
     parser.add_argument('--start_seed', type=int, default=0,
-                        help='The initial seed when evaluating on multiple seeds.')
+                        help='The initial seed when evaluating on multiple seeds.',
+                        metavar=metavar)
     parser.add_argument('--stop_seed', type=int, default=9,
-                        help='The final seed when evaluating on multiple seeds.')
+                        help='The final seed when evaluating on multiple seeds.',
+                        metavar=metavar)
     parser.add_argument('--device', type=int, default=0,
-                        help='which gpu to use if any (default: 0)')
+                        help='which gpu to use if any (default: 0)',
+                        metavar=metavar)
     parser.add_argument('--model', type=str, default='sparse_cin',
-                        help='model, possible choices: cin, dummy, ... (default: cin)')
+                        help='model, possible choices: cin, dummy, ... (default: cin)',
+                        metavar=metavar)
     parser.add_argument('--use_coboundaries', type=str, default='False',
+                        metavar=metavar,
                         help='whether to use coboundary features for up-messages in sparse_cin (default: False)')
     # ^^^ here we explicitly pass it as string as easier to handle in tuning
     parser.add_argument('--indrop_rate', type=float, default=0.0,
-                        help='inputs dropout rate for molec models(default: 0.0)')
+                        help='inputs dropout rate for molec models(default: 0.0)',
+                        metavar=metavar)
     parser.add_argument('--drop_rate', type=float, default=0.0,
-                        help='dropout rate (default: 0.5)')
+                        help='dropout rate (default: 0.5)',
+                        metavar=metavar)
     parser.add_argument('--drop_position', type=str, default='lin2',
-                        help='where to apply the final dropout (default: lin2, i.e. _before_ lin2)')
+                        help='where to apply the final dropout (default: lin2, i.e. _before_ lin2)',
+                        metavar=metavar)
     parser.add_argument('--nonlinearity', type=str, default='relu',
-                        help='activation function (default: relu)')
+                        help='activation function (default: relu)',
+                        metavar=metavar)
     parser.add_argument('--readout', type=str, default='sum',
-                        help='readout function (default: sum)')
+                        help='readout function (default: sum)',
+                        metavar=metavar)
     parser.add_argument('--final_readout', type=str, default='sum',
-                        help='final readout function (default: sum)')
+                        help='final readout function (default: sum)',
+                        metavar=metavar)
     parser.add_argument('--readout_dims', type=int, nargs='+', default=(0, 1, 2),
-                        help='dims at which to apply the final readout (default: 0 1 2, i.e. nodes, edges, 2-cells)')
+                        help='dims at which to apply the final readout (default: 0 1 2, i.e. nodes, edges, 2-cells)',
+                        metavar=metavar)
     parser.add_argument('--jump_mode', type=str, default=None,
-                        help='Mode for JK (default: None, i.e. no JK)')
+                        help='Mode for JK (default: None, i.e. no JK)',
+                        metavar=metavar)
     parser.add_argument('--graph_norm', type=str, default='bn', choices=['bn', 'ln', 'id'],
-                        help='Normalization layer to use inside the model')
+                        help='Normalization layer to use inside the model',
+                        metavar=metavar)
     parser.add_argument('--lr', type=float, default=0.001,
-                        help='learning rate (default: 0.001)')
+                        help='learning rate (default: 0.001)',
+                        metavar=metavar)
     parser.add_argument('--lr_scheduler', type=str, default='StepLR',
-                        help='learning rate decay scheduler (default: StepLR)')
+                        help='learning rate decay scheduler (default: StepLR)',
+                        metavar=metavar)
     parser.add_argument('--lr_scheduler_decay_steps', type=int, default=50,
-                        help='number of epochs between lr decay (default: 50)')
+                        help='number of epochs between lr decay (default: 50)',
+                        metavar=metavar)
     parser.add_argument('--lr_scheduler_decay_rate', type=float, default=0.5,
-                        help='strength of lr decay (default: 0.5)')
+                        help='strength of lr decay (default: 0.5)',
+                        metavar=metavar)
     parser.add_argument('--lr_scheduler_patience', type=float, default=10,
-                        help='patience for `ReduceLROnPlateau` lr decay (default: 10)')
+                        help='patience for `ReduceLROnPlateau` lr decay (default: 10)',
+                        metavar=metavar)
     parser.add_argument('--lr_scheduler_min', type=float, default=0.00001,
-                        help='min LR for `ReduceLROnPlateau` lr decay (default: 1e-5)')
+                        help='min LR for `ReduceLROnPlateau` lr decay (default: 1e-5)',
+                        metavar=metavar)
     parser.add_argument('--num_layers', type=int, default=5,
-                        help='number of message passing layers (default: 5)')
+                        help='number of message passing layers (default: 5)',
+                        metavar=metavar)
     parser.add_argument('--emb_dim', type=int, default=64,
-                        help='dimensionality of hidden units in models (default: 300)')
+                        help='dimensionality of hidden units in models (default: 300)',
+                        metavar=metavar)
     parser.add_argument('--batch_size', type=int, default=32,
-                        help='input batch size for training (default: 32)')
+                        help='input batch size for training (default: 32)',
+                        metavar=metavar)
     parser.add_argument('--epochs', type=int, default=100,
-                        help='number of epochs to train (default: 100)')
+                        help='number of epochs to train (default: 100)',
+                        metavar=metavar)
     parser.add_argument('--num_workers', type=int, default=0,
-                        help='number of workers (default: 0)')
+                        help='number of workers (default: 0)',
+                        metavar=metavar)
     parser.add_argument('--dataset', type=str, default="PROTEINS",
-                        help='dataset name (default: PROTEINS)')
+                        help='dataset name (default: PROTEINS)',
+                        metavar=metavar)
     parser.add_argument('--task_type', type=str, default='classification',
-                        help='task type, either (bin)classification, regression or isomorphism (default: classification)')    
+                        help='task type, either (bin)classification, regression or isomorphism (default: classification)',metavar=metavar)
     parser.add_argument('--eval_metric', type=str, default='accuracy',
-                        help='evaluation metric (default: accuracy)')
+                        help='evaluation metric (default: accuracy)',
+                        metavar=metavar)
     parser.add_argument('--iso_eps', type=int, default=0.01,
-                        help='Threshold to define (non-)isomorphism')                    
+                        help='Threshold to define (non-)isomorphism',
+                        metavar=metavar)
     parser.add_argument('--minimize', action='store_true',
-                        help='whether to minimize evaluation metric or not')
+                        help='whether to minimize evaluation metric or not',
+                        metavar=metavar)
     parser.add_argument('--max_dim', type=int, default="2",
-                        help='maximum cellular dimension (default: 2, i.e. two_cells)')
+                        help='maximum cellular dimension (default: 2, i.e. two_cells)',
+                        metavar=metavar)
     parser.add_argument('--max_ring_size', type=int, default=None,
-                        help='maximum ring size to look for (default: None, i.e. do not look for rings)')
+                        help='maximum ring size to look for (default: None, i.e. do not look for rings)',
+                        metavar=metavar)
     parser.add_argument('--result_folder', type=str, default=os.path.join(ROOT_DIR, 'exp', 'results'),
-                        help='filename to output result (default: None, will use `scn/exp/results`)')
+                        help='filename to output result (default: None, will use `scn/exp/results`)',
+                        metavar=metavar)
     parser.add_argument('--exp_name', type=str, default=str(time.time()),
                         help='name for specific experiment; if not provided, a name based on unix timestamp will be '+\
-                        'used. (default: None)')
+                        'used. (default: None)',
+                        metavar=metavar)
     parser.add_argument('--dump_curves', action='store_true',
-                        help='whether to dump the training curves to disk')
+                        help='whether to dump the training curves to disk',
+                        metavar=metavar)
     parser.add_argument('--untrained', action='store_true',
-                        help='whether to skip training')
+                        help='whether to skip training',
+                        metavar=metavar)
     parser.add_argument('--fold', type=int, default=None,
-                        help='fold index for k-fold cross-validation experiments')
+                        help='fold index for k-fold cross-validation experiments',
+                        metavar=metavar)
     parser.add_argument('--folds', type=int, default=None,
-                        help='The number of folds to run on in cross validation experiments')
+                        help='The number of folds to run on in cross validation experiments',
+                        metavar=metavar)
     parser.add_argument('--init_method', type=str, default='sum',
-                        help='How to initialise features at higher levels (sum, mean)')
+                        help='How to initialise features at higher levels (sum, mean)',
+                        metavar=metavar)
     parser.add_argument('--train_eval_period', type=int, default=10,
-                        help='How often to evaluate on train.')
-    parser.add_argument('--tune', action='store_true', help='Use the tuning indexes')
+                        help='How often to evaluate on train.',
+                        metavar=metavar)
+    parser.add_argument('--tune', action='store_true', help='Use the tuning indexes',
+                        metavar=metavar)
     parser.add_argument('--flow_points',  type=int, default=400,
-                        help='Number of points to use for the flow experiment')
+                        help='Number of points to use for the flow experiment',
+                        metavar=metavar)
     parser.add_argument('--flow_classes',  type=int, default=3,
-                        help='Number of classes for the flow experiment')
+                        help='Number of classes for the flow experiment',
+                        metavar=metavar)
     parser.add_argument('--train_orient',  type=str, default='default',
-                        help='What orientation to use for the training complexes')
+                        help='What orientation to use for the training complexes',
+                        metavar=metavar)
     parser.add_argument('--test_orient',  type=str, default='default',
-                        help='What orientation to use for the testing complexes')
+                        help='What orientation to use for the testing complexes',
+                        metavar=metavar)
     parser.add_argument('--fully_orient_invar',  action='store_true',
-                        help='Whether to apply torch.abs from the first layer')
+                        help='Whether to apply torch.abs from the first layer',
+                        metavar=metavar)
     parser.add_argument('--use_edge_features', action='store_true',
-                        help="Use edge features for molecular graphs")
+                        help="Use edge features for molecular graphs",
+                        metavar=metavar)
     parser.add_argument('--simple_features', action='store_true',
-                        help="Whether to use only a subset of original features, specific to ogb-mol*")
-    parser.add_argument('--early_stop', action='store_true', help='Stop when minimum LR is reached.')
+                        help="Whether to use only a subset of original features, specific to ogb-mol*",
+                        metavar=metavar)
+    parser.add_argument('--early_stop', action='store_true', help='Stop when minimum LR is reached.',
+                        metavar=metavar)
     parser.add_argument('--paraid',  type=int, default=0,
-                        help='model id')
+                        help='model id',
+                        metavar=metavar)
     parser.add_argument('--preproc_jobs',  type=int, default=2,
                         help='Jobs to use for the dataset preprocessing. For all jobs use "-1".'
-                             'For sequential processing (no parallelism) use "1"')
+                             'For sequential processing (no parallelism) use "1"',
+                        metavar=metavar)
     return parser
 
 
