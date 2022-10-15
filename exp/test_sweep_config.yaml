@@ -6,7 +6,6 @@ command:
   - ${args_hyphens_no_equals} # args
   - "--use_edge_features"
   - "--dump_curves"
-  - "--use_coboundaries"
 method: random
 parameters:
   device:
@@ -27,6 +26,8 @@ parameters:
     value: lin2
   nonlinearity:
     value: relu
+  use_cobounaries:
+    value: True
   readout:
     value: mean
   final_readout:
