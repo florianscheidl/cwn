@@ -16,6 +16,12 @@ parameters:
     value: 9
   exp_name:
     value: cwn-molhiv
+  dataset:
+    value: MOLHIV
+  model:
+    value: ogb_embed_sparse_cin
+  use_coboundaries:
+    value: True
   indrop_rate:
     value: 0.0
   drop_rate:
@@ -26,8 +32,6 @@ parameters:
     value: lin2
   nonlinearity:
     value: relu
-  use_coboundaries:
-    value: True
   readout:
     value: mean
   final_readout:
