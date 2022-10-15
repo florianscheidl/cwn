@@ -4,6 +4,9 @@ command:
   - "-m"
   - ${program}
   - ${args}
+  - "--use_edge_features"
+  - "--dump_curves"
+  - "--use_coboundaries"
 method: random
 parameters:
   device:
@@ -14,8 +17,6 @@ parameters:
     value: 9
   exp_name:
     value: cwn-molhiv
-  use_coboundaries:
-    value: True
   indrop_rate:
     value: 0.0
   drop_rate:
@@ -58,7 +59,3 @@ parameters:
     value: sum
   train_eval_period:
     value: 10
-  use_edge_features:
-    value: True
-  dump_curves:
-    value: True
