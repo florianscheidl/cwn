@@ -26,7 +26,7 @@ parameters:
     value: lin2
   nonlinearity:
     value: relu
-  use_cobounaries:
+  use_coboundaries:
     value: True
   readout:
     value: mean
