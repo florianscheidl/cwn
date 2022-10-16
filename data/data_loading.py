@@ -146,6 +146,12 @@ def load_dataset(name, root=os.path.join(ROOT_DIR, 'datasets'), max_dim=2, fold=
     elif name == 'MUTAG':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
             fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+    elif name == 'ENZYMES':
+        dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=6,
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+    elif name == 'Qm9': # todo: make sure it recognises this as regression, not as classification target!
+        dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=19,
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
     elif name == 'FLOW':
         dataset = FlowDataset(os.path.join(root, name), name, num_points=kwargs['flow_points'],
             train_samples=1000, val_samples=200, train_orient=kwargs['train_orient'],
@@ -177,6 +183,11 @@ def load_dataset(name, root=os.path.join(ROOT_DIR, 'datasets'), max_dim=2, fold=
         dataset = DummyDataset(os.path.join(root, name))
     elif name == 'DUMMYM':
         dataset = DummyMolecularDataset(os.path.join(root, name))
+    elif name == 'products':
+        official_name = 'ogbn-' + name.lower()
+        dataset = OGBDataset(os.path.join(root, name), official_name, max_ring_size=kwargs['max_ring_size'],
+                             use_edge_features=kwargs['use_edge_features'], simple=kwargs['simple_features'],
+                             init_method=init_method, n_jobs=n_jobs)
     else:
         raise NotImplementedError(name)
     return dataset
