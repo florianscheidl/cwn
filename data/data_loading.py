@@ -121,37 +121,48 @@ def load_dataset(name, root=os.path.join(ROOT_DIR, 'datasets'), max_dim=2, fold=
         dataset = ClusterDataset(os.path.join(root, 'CLUSTER'), max_dim)
     elif name == 'IMDBBINARY':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
-            fold=fold, degree_as_tag=True, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=True, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'IMDBMULTI':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=3,
-            fold=fold, degree_as_tag=True, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None)) 
+            fold=fold, degree_as_tag=True, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'REDDITBINARY':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'REDDITMULTI5K':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=5,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'PROTEINS':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'NCI1':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'NCI109':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'PTC':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'MUTAG':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'ENZYMES':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=6,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'Qm9': # todo: make sure it recognises this as regression, not as classification target!
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=19,
-            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None))
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'FLOW':
         dataset = FlowDataset(os.path.join(root, name), name, num_points=kwargs['flow_points'],
             train_samples=1000, val_samples=200, train_orient=kwargs['train_orient'],

@@ -3,6 +3,7 @@ import torch
 import pickle
 import numpy as np
 from definitions import ROOT_DIR
+from sklearn.model_selection import train_test_split
 
 from data.tu_utils import load_data, S2V_to_PyG, get_fold_indices
 from data.utils import convert_graph_dataset_with_gudhi, convert_graph_dataset_with_rings
@@ -38,7 +39,7 @@ class TUDataset(InMemoryComplexDataset):
     """A dataset of complexes obtained by lifting graphs from TUDatasets."""
 
     def __init__(self, root, name, max_dim=2, num_classes=2, degree_as_tag=False, fold=0,
-                 init_method='sum', seed=0, include_down_adj=False, max_ring_size=None):
+                 init_method='sum', seed=0, include_down_adj=False, max_ring_size=None, validation_technique: str = 'k_fold'):
         self.name = name
         self.degree_as_tag = degree_as_tag
         assert max_ring_size is None or max_ring_size > 3
@@ -54,18 +55,24 @@ class TUDataset(InMemoryComplexDataset):
             
         self.fold = fold
         self.seed = seed
-        train_filename = os.path.join(self.raw_dir, '10fold_idx', 'train_idx-{}.txt'.format(fold + 1))  
-        test_filename = os.path.join(self.raw_dir, '10fold_idx', 'test_idx-{}.txt'.format(fold + 1))
-        if os.path.isfile(train_filename) and os.path.isfile(test_filename):
-            # NB: we consider the loaded test indices as val_ids ones and set test_ids to None
-            #     to make it more convenient to work with the training pipeline
-            self.train_ids = np.loadtxt(train_filename, dtype=int).tolist()
-            self.val_ids = np.loadtxt(test_filename, dtype=int).tolist()
-        else:
-            train_ids, val_ids = get_fold_indices(self, self.seed, self.fold)
-            self.train_ids = train_ids
-            self.val_ids = val_ids
-        self.test_ids = None
+
+        if validation_technique=='k_fold':
+            train_filename = os.path.join(self.raw_dir, '10fold_idx', 'train_idx-{}.txt'.format(fold + 1))
+            test_filename = os.path.join(self.raw_dir, '10fold_idx', 'test_idx-{}.txt'.format(fold + 1))
+            if os.path.isfile(train_filename) and os.path.isfile(test_filename):
+                # NB: we consider the loaded test indices as val_ids ones and set test_ids to None
+                #     to make it more convenient to work with the training pipeline
+                self.train_ids = np.loadtxt(train_filename, dtype=int).tolist()
+                self.val_ids = np.loadtxt(test_filename, dtype=int).tolist()
+            else:
+                train_ids, val_ids = get_fold_indices(self, self.seed, self.fold)
+                self.train_ids = train_ids
+                self.val_ids = val_ids
+            self.test_ids = None
+        elif validation_technique=='random_splits':
+            self.train_ids, self.val_ids = train_test_split(len(self), test_size=0.1, random_state=seed)
+            self.test_ids = None
+
         # TODO: Add this later to our zip
         # tune_train_filename = os.path.join(self.raw_dir, 'tests_train_split.txt'.format(fold + 1))
         # self.tune_train_ids = np.loadtxt(tune_train_filename, dtype=int).tolist()
