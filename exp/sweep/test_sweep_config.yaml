@@ -1,0 +1,79 @@
+program: exp.run_mol_exp
+command:
+  - ${interpreter}
+  - "-m"
+  - ${program}
+  - ${args} # args
+  - "--use_edge_features"
+  - "--dump_curves"
+  # if we do regression, we additionally want "--minimize"
+
+method: random
+parameters:
+  seed:
+    values: [0]
+
+  # dataset:
+  dataset_name:
+    values: [MUTAG]
+  task_type:
+    value: classification
+  eval_metric:
+    value: accuracy # specified for ogb datasets, for others: accuracy or others.
+
+  # training
+  batch_size:
+    value: 32
+  epochs:
+    value: 1 # default: 200
+  folds:
+    value: 1 # default: 10
+  train_eval_period:
+    value: 10
+  validation_technique:
+    value: [ k_fold, random_splits ]
+
+  # NN parameters
+  nonlinearity:
+    value: relu
+  graph_norm:
+    value: bn
+
+  # GNN Specific params
+  emb_dim:
+    value: 64
+  num_layers:
+    value: 2
+  readout:
+    value: sum
+  final_readout:
+    value: sum
+
+  # Model-specific GNN params:
+  model:
+    value: cin
+  use_coboundaries:
+    value: False
+  max_dim:
+    value: 2
+  max_ring_size:
+    value: 6
+  init_method:
+    value: sum
+
+  # Regularization
+  drop_rate:
+    value: 0.5
+
+  # Optimizer
+  lr:
+    value: 0.001
+  lr_scheduler:
+    value: ReduceLROnPlateau
+  lr_scheduler_decay_rate:
+    value: 0.5
+  lr_scheduler_patience:
+    value: 10
+  lr_scheduler_min_lr:
+    value: 1e-5
+

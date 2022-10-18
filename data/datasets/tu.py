@@ -42,6 +42,7 @@ class TUDataset(InMemoryComplexDataset):
                  init_method='sum', seed=0, include_down_adj=False, max_ring_size=None, validation_technique: str = 'k_fold'):
         self.name = name
         self.degree_as_tag = degree_as_tag
+        self.init_method = init_method
         assert max_ring_size is None or max_ring_size > 3
         self._max_ring_size = max_ring_size
         cellular = (max_ring_size is not None)
@@ -72,6 +73,8 @@ class TUDataset(InMemoryComplexDataset):
         elif validation_technique=='random_splits':
             self.train_ids, self.val_ids = train_test_split(len(self), test_size=0.1, random_state=seed)
             self.test_ids = None
+        else:
+            raise ValueError('Unknown validation technique.')
 
         # TODO: Add this later to our zip
         # tune_train_filename = os.path.join(self.raw_dir, 'tests_train_split.txt'.format(fold + 1))
@@ -84,13 +87,13 @@ class TUDataset(InMemoryComplexDataset):
     def processed_dir(self):
         """This is overwritten, so the cellular complex data is placed in another folder"""
         directory = super(TUDataset, self).processed_dir
-        suffix = f"_{self._max_ring_size}rings" if self._cellular else ""
+        suffix = f"_MaxRing_{self._max_ring_size}_MaxDim{self.max_dim}_Init{self.init_method}" if self._cellular else ""
         suffix += f"_down_adj" if self.include_down_adj else ""
         return directory + suffix
             
     @property
     def processed_file_names(self):
-        return ['{}_complex_list.pt'.format(self.name)]
+        return [f'{self.name}_MaxRing_{self._max_ring_size}_MaxDim{self.max_dim}_Init{self.init_method}_complex_list.pt']
     
     @property
     def raw_file_names(self):

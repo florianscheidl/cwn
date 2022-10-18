@@ -1,7 +1,7 @@
 import torch
 import os.path as osp
 
-from data.utils import convert_graph_dataset_with_rings
+from data.utils import convert_graph_dataset_with_rings, convert_graph_dataset_with_gudhi
 from data.datasets import InMemoryComplexDataset
 from ogb.graphproppred import PygGraphPropPredDataset
 
@@ -10,9 +10,11 @@ class OGBDataset(InMemoryComplexDataset):
     """This is OGB graph-property prediction. This are graph-wise classification tasks."""
 
     def __init__(self, root, name, max_ring_size, use_edge_features=False, transform=None,
-                 pre_transform=None, pre_filter=None, init_method='sum', simple=False, n_jobs=2):
+                 pre_transform=None, pre_filter=None, init_method='sum', simple=False, n_jobs=2,
+                 max_dim=2):
         self.name = name
         self._max_ring_size = max_ring_size
+        self._max_dim = max_dim
         self._use_edge_features = use_edge_features
         self._simple = simple
         self._n_jobs = n_jobs
@@ -31,13 +33,16 @@ class OGBDataset(InMemoryComplexDataset):
 
     @property
     def processed_file_names(self):
-        return [f'{self.name}_complex.pt', f'{self.name}_idx.pt', f'{self.name}_tasks.pt']
+        return [f'{self.name}_MaxRing_{self._max_ring_size}_MaxDim{self.max_dim}_Init{self.init_method}_complex_list.pt',
+                f'{self.name}_idx.pt',
+                f'{self.name}_tasks.pt']
     
     @property
     def processed_dir(self):
         """Overwrite to change name based on edge and simple feats"""
         directory = super(OGBDataset, self).processed_dir
-        suffix1 = f"_{self._max_ring_size}rings" if self._cellular else ""
+        # suffix1 = f"_{self._max_ring_size}rings" if self._cellular else ""
+        suffix1 = f"_MaxRing_{self._max_ring_size}_MaxDim{self.max_dim}_Init{self.init_method}" if self._cellular else ""
         suffix2 = "-E" if self._use_edge_features else ""
         suffix3 = "-S" if self._simple else ""
         return directory + suffix1 + suffix2 + suffix3
@@ -66,15 +71,30 @@ class OGBDataset(InMemoryComplexDataset):
         
         # NB: the init method would basically have no effect if 
         # we use edge features and do not initialize rings. 
-        print(f"Converting the {self.name} dataset to a cell complex...")
-        complexes, _, _ = convert_graph_dataset_with_rings(
-            dataset,
-            max_ring_size=self._max_ring_size,
-            include_down_adj=self.include_down_adj,
-            init_method=self._init_method,
-            init_edges=self._use_edge_features,
-            init_rings=False,
-            n_jobs=self._n_jobs)
+        # print(f"Converting the {self.name} dataset to a cell complex...")
+        # complexes, _, _ = convert_graph_dataset_with_rings(
+        #     dataset,
+        #     max_ring_size=self._max_ring_size,
+        #     include_down_adj=self.include_down_adj,
+        #     init_method=self._init_method,
+        #     init_edges=self._use_edge_features,
+        #     init_rings=False,
+        #     n_jobs=self._n_jobs)
+
+        if self._cellular:
+            print("Converting the dataset accounting for rings...")
+            complexes, _, _ = convert_graph_dataset_with_rings(dataset, max_ring_size=self._max_ring_size,
+                                                               include_down_adj=self.include_down_adj,
+                                                               init_method=self._init_method,
+                                                               init_edges=True, init_rings=True)
+        else:
+            print("Converting the dataset with gudhi...")
+            # TODO: eventually remove the following comment
+            # What about the init_method here? Adding now, although I remember we had handled this
+            complexes, _, _ = convert_graph_dataset_with_gudhi(dataset, expansion_dim=self.max_dim,
+                                                               include_down_adj=self.include_down_adj,
+                                                               init_method=self._init_method)
+
         
         print(f'Saving processed dataset in {self.processed_paths[0]}...')
         torch.save(self.collate(complexes, self.max_dim), self.processed_paths[0])

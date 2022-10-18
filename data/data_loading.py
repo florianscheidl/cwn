@@ -189,7 +189,8 @@ def load_dataset(name, root=os.path.join(ROOT_DIR, 'datasets'), max_dim=2, fold=
         official_name = 'ogbg-'+name.lower()
         dataset = OGBDataset(os.path.join(root, name), official_name, max_ring_size=kwargs['max_ring_size'],
                              use_edge_features=kwargs['use_edge_features'], simple=kwargs['simple_features'],
-                             init_method=init_method, n_jobs=n_jobs)
+                             init_method=init_method, n_jobs=n_jobs,
+                             max_dim=kwargs.get('max_dim'))
     elif name == 'DUMMY':
         dataset = DummyDataset(os.path.join(root, name))
     elif name == 'DUMMYM':
