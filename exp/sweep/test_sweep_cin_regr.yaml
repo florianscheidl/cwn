@@ -21,7 +21,7 @@ parameters:
   task_type:
     value: regression
   eval_metric:
-    value: mae # specified for ogb datasets, for others: accuracy. Could support additional metrics, e.g. ROC-AUC.
+    value: mse # specified for ogb datasets, for others: accuracy. Could support additional metrics, e.g. ROC-AUC.
 
   # training
   batch_size:

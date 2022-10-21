@@ -139,6 +139,10 @@ def load_dataset(name, root=os.path.join(ROOT_DIR, 'datasets'), max_dim=2, fold=
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
             fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
                             validation_technique=kwargs.get('validation_technique'))
+    elif name == 'COLLAB':
+        dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
+            fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
+                            validation_technique=kwargs.get('validation_technique'))
     elif name == 'NCI1':
         dataset = TUDataset(os.path.join(root, name), name, max_dim=max_dim, num_classes=2,
             fold=fold, degree_as_tag=False, init_method=init_method, max_ring_size=kwargs.get('max_ring_size', None),
