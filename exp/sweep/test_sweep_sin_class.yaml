@@ -17,7 +17,7 @@ parameters:
 
   # dataset:
   dataset:
-    values: [COLLAB, MOLHIV] # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV, ]
+    values: [MOLHIV] # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
   task_type:
     value: classification
   eval_metric:
