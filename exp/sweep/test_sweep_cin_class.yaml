@@ -8,7 +8,7 @@ command:
   - "--dump_curves"
   # if we do regression, we additionally want "--minimize"
 
-method: random
+method: grid
 parameters:
 
   # Randomness
@@ -17,7 +17,7 @@ parameters:
 
   # dataset:
   dataset:
-    values: [MUTAG, ENZYMES, PROTEINS, NCI109]
+    values: [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, COLLAB]
   task_type:
     value: classification
   eval_metric:
@@ -27,13 +27,15 @@ parameters:
   batch_size:
     value: 32
   epochs:
-    value: 1 # default: 200
+    value: 2 # default: 200
   folds:
     value: 1 # default: 10
+  fold:
+    value: 0
   train_eval_period:
     value: 10
   validation_technique:
-    values: [ k_fold, random_splits ]
+    value: random_splits
 
   # NN parameters
   nonlinearity:
@@ -43,7 +45,7 @@ parameters:
 
   # GNN Specific params
   emb_dim:
-    value: 64
+    value: 8
   num_layers:
     value: 2
   readout:
@@ -59,23 +61,23 @@ parameters:
   max_dim:
     value: 2
   max_ring_size:
-    value: 6
+    value: 5
   init_method:
     value: sum
 
   # Regularization
   drop_rate:
-    value: 0.5
+    value: '0.0'
 
   # Optimizer
   lr:
-    value: 0.001
+    value: '0.001'
   lr_scheduler:
     value: StepLR
   lr_scheduler_decay_steps:
     value: 30
   lr_scheduler_decay_rate:
-    value: 0.5
+    value: '0.5'
   lr_scheduler_patience:
     value: 10
   lr_scheduler_min_lr:

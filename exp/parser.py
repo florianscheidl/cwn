@@ -54,7 +54,7 @@ def get_parser():
                         help='The number of folds to run on in cross validation experiments if validation_technique is k-fold CV, otherwise number of random repetitions of datset splitting.')
     parser.add_argument('--train_eval_period', type=int, default=10,
                         help='How often to evaluate on train.')
-    parser.add_argument('--validation_technique', type=str, default='k_fold',
+    parser.add_argument('--validation_technique', type=str, default='random_splits',
                         help='How to split the data into train and validation. Either k-fold ("k_fold") or repeated random splits ("random_splits".')
 
     # NN Architecture

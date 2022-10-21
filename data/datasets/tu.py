@@ -39,7 +39,7 @@ class TUDataset(InMemoryComplexDataset):
     """A dataset of complexes obtained by lifting graphs from TUDatasets."""
 
     def __init__(self, root, name, max_dim=2, num_classes=2, degree_as_tag=False, fold=0,
-                 init_method='sum', seed=0, include_down_adj=False, max_ring_size=None, validation_technique: str = 'k_fold'):
+                 init_method='sum', seed=0, include_down_adj=False, max_ring_size=None, validation_technique: str = 'random_splits'):
         self.name = name
         self.degree_as_tag = degree_as_tag
         self.init_method = init_method
