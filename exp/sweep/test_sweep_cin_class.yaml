@@ -73,7 +73,7 @@ parameters:
   lr_scheduler:
     value: StepLR
   lr_scheduler_decay_steps:
-    values: [30,60,90]
+    value: 30
   lr_scheduler_decay_rate:
     value: 0.5
   lr_scheduler_patience:
