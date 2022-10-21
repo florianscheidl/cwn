@@ -1,4 +1,4 @@
-program: exp.run_mol_exp
+program: exp.run_exp
 command:
   - ${interpreter}
   - "-m"
