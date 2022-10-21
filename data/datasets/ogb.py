@@ -20,7 +20,7 @@ class OGBDataset(InMemoryComplexDataset):
         self._simple = simple
         self._n_jobs = n_jobs
         super(OGBDataset, self).__init__(root, transform, pre_transform, pre_filter,
-                                         max_dim=2, init_method=init_method, cellular=True)
+                                         max_dim=self._max_dim, init_method=init_method, cellular=True)
         self.data, self.slices, idx, self.num_tasks = self.load_dataset()
         self.train_ids = idx['train']
         self.val_ids = idx['valid']
@@ -34,7 +34,7 @@ class OGBDataset(InMemoryComplexDataset):
 
     @property
     def processed_file_names(self):
-        return [f'{self.name}_MaxRing_{self._max_ring_size}_MaxDim{self.max_dim}_Init{self.init_method}_complex_list.pt',
+        return [f'{self.name}_MaxRing_{self._max_ring_size}_MaxDim{self._max_dim}_Init{self.init_method}_complex_list.pt',
                 f'{self.name}_idx.pt',
                 f'{self.name}_tasks.pt']
     
@@ -43,7 +43,7 @@ class OGBDataset(InMemoryComplexDataset):
         """Overwrite to change name based on edge and simple feats"""
         directory = super(OGBDataset, self).processed_dir
         # suffix1 = f"_{self._max_ring_size}rings" if self._cellular else ""
-        suffix1 = f"_MaxRing_{self._max_ring_size}_MaxDim{self.max_dim}_Init{self.init_method}" if self._cellular else ""
+        suffix1 = f"_MaxRing_{self._max_ring_size}_MaxDim{self._max_dim}_Init{self.init_method}" if self._cellular else ""
         suffix2 = "-E" if self._use_edge_features else ""
         suffix3 = "-S" if self._simple else ""
         return directory + suffix1 + suffix2 + suffix3
@@ -92,13 +92,13 @@ class OGBDataset(InMemoryComplexDataset):
             print("Converting the dataset with gudhi...")
             # TODO: eventually remove the following comment
             # What about the init_method here? Adding now, although I remember we had handled this
-            complexes, _, _ = convert_graph_dataset_with_gudhi(dataset, expansion_dim=self.max_dim,
+            complexes, _, _ = convert_graph_dataset_with_gudhi(dataset, expansion_dim=self._max_dim,
                                                                include_down_adj=self.include_down_adj,
                                                                init_method=self._init_method)
 
         
         print(f'Saving processed dataset in {self.processed_paths[0]}...')
-        torch.save(self.collate(complexes, self.max_dim), self.processed_paths[0])
+        torch.save(self.collate(complexes, self._max_dim), self.processed_paths[0])
         
         print(f'Saving idx in {self.processed_paths[1]}...')
         torch.save(split_idx, self.processed_paths[1])
