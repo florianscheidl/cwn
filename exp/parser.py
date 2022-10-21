@@ -19,7 +19,7 @@ def get_parser():
                         help='which gpu to use if any (default: 0)')
 
     # Dataset
-    parser.add_argument('--dataset_name', type=str, default="PROTEINS",
+    parser.add_argument('--dataset', type=str, default="PROTEINS",
                         help='dataset name (default: PROTEINS)')
     parser.add_argument('--task_type', type=str, default='classification',
                         help='task type, either (bin)classification, regression or isomorphism (default: classification)')

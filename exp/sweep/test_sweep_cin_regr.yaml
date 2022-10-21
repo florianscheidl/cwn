@@ -16,7 +16,7 @@ parameters:
     values: [0]
 
   # dataset:
-  dataset_name:
+  dataset:
     values: [ZINC, Qm9]
   task_type:
     value: regression
