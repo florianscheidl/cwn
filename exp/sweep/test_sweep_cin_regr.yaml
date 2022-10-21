@@ -33,7 +33,7 @@ parameters:
   train_eval_period:
     value: 10
   validation_technique:
-    value: [ k_fold, random_splits ]
+    values: [ k_fold, random_splits ]
 
   # NN parameters
   nonlinearity:
@@ -73,7 +73,7 @@ parameters:
   lr_scheduler:
     value: StepLR
   lr_scheduler_decay_steps:
-    value: [30,60,90]
+    values: [30,60,90]
   lr_scheduler_decay_rate:
     value: 0.5
   lr_scheduler_patience:
