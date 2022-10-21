@@ -10,16 +10,18 @@ command:
 
 method: random
 parameters:
+
+  # Randomness
   seed:
     values: [0]
 
   # dataset:
   dataset_name:
-    values: [MUTAG]
+    values: [ZINC, Qm9]
   task_type:
-    value: classification
+    value: regression
   eval_metric:
-    value: accuracy # specified for ogb datasets, for others: accuracy or others.
+    value: mae # specified for ogb datasets, for others: accuracy. Could support additional metrics, e.g. ROC-AUC.
 
   # training
   batch_size:
@@ -51,7 +53,7 @@ parameters:
 
   # Model-specific GNN params:
   model:
-    value: cin
+    values: [cin, sparse_cin]
   use_coboundaries:
     value: False
   max_dim:
@@ -69,7 +71,9 @@ parameters:
   lr:
     value: 0.001
   lr_scheduler:
-    value: ReduceLROnPlateau
+    value: StepLR
+  lr_scheduler_decay_steps:
+    value: [30,60,90]
   lr_scheduler_decay_rate:
     value: 0.5
   lr_scheduler_patience:
