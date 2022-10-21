@@ -32,7 +32,7 @@ parameters:
   train_eval_period:
     value: 10
   validation_technique:
-    value: [ k_fold, random_splits ]
+    value: random_splits
 
   # NN parameters
   nonlinearity:
@@ -58,7 +58,7 @@ parameters:
   max_dim:
     value: 3
   max_ring_size:
-    value: 3
+    value: None
   init_method:
     value: sum
 

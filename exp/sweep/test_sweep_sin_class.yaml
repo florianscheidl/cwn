@@ -61,7 +61,7 @@ parameters:
   max_dim:
     value: 3
   max_ring_size:
-    value: 3
+    value: None
   init_method:
     value: sum
 
