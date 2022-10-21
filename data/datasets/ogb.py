@@ -15,6 +15,7 @@ class OGBDataset(InMemoryComplexDataset):
         self.name = name
         self._max_ring_size = max_ring_size
         self._max_dim = max_dim
+        self.init_method = init_method
         self._use_edge_features = use_edge_features
         self._simple = simple
         self._n_jobs = n_jobs
