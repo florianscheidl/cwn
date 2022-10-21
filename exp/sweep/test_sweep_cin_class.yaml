@@ -17,7 +17,7 @@ parameters:
 
   # dataset:
   dataset:
-    values: [MUTAG, ENZYMES, PTC, PROTEINS, NCI109, IMDB-MULTI]
+    values: [MUTAG, ENZYMES, PROTEINS, NCI109]
   task_type:
     value: classification
   eval_metric:
