@@ -160,11 +160,11 @@ def validate_args(args):
         if args.model == 'gin_ring':
             assert args.graph_norm == 'bn'
     elif args.dataset.startswith('ZINC'):
-        assert args.model.startswith('embed')
+        # assert args.model.startswith('embed')
         assert args.task_type == 'regression'
         assert args.minimize
-        assert args.eval_metric == 'mae'
-        assert args.lr_scheduler == 'ReduceLROnPlateau'
+        # assert args.eval_metric == 'mae'
+        # assert args.lr_scheduler == 'ReduceLROnPlateau'
         assert not args.simple_features
     elif args.dataset in ['MOLHIV', 'MOLPCBA', 'MOLTOX21', 'MOLTOXCAST', 'MOLMUV',
                           'MOLBACE', 'MOLBBBP', 'MOLCLINTOX', 'MOLSIDER', 'MOLESOL',
