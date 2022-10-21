@@ -80,14 +80,24 @@ def main(args):
 
     else:
         # Data loading
-        dataset = load_dataset(args.dataset, max_dim=args.max_dim, fold=args.fold,
-                               init_method=args.init_method, emb_dim=args.emb_dim,
-                               flow_points=args.flow_points, flow_classes=args.flow_classes,
-                               max_ring_size=args.max_ring_size,
-                               use_edge_features=args.use_edge_features,
-                               simple_features=args.simple_features, n_jobs=args.preproc_jobs,
-                               train_orient=args.train_orient, test_orient=args.test_orient,
-                               validation_technique=args.validation_technique)
+        if args.max_ring_size is not None:
+            dataset = load_dataset(args.dataset, max_dim=args.max_dim, fold=args.fold,
+                                   init_method=args.init_method, emb_dim=args.emb_dim,
+                                   flow_points=args.flow_points, flow_classes=args.flow_classes,
+                                   max_ring_size=args.max_ring_size,
+                                   use_edge_features=args.use_edge_features,
+                                   simple_features=args.simple_features, n_jobs=args.preproc_jobs,
+                                   train_orient=args.train_orient, test_orient=args.test_orient,
+                                   validation_technique=args.validation_technique)
+        else:
+            dataset = load_dataset(args.dataset, max_dim=args.max_dim, fold=args.fold,
+                                   init_method=args.init_method, emb_dim=args.emb_dim,
+                                   flow_points=args.flow_points, flow_classes=args.flow_classes,
+                                   max_ring_size=args.max_ring_size,
+                                   use_edge_features=args.use_edge_features,
+                                   simple_features=args.simple_features, n_jobs=args.preproc_jobs,
+                                   train_orient=args.train_orient, test_orient=args.test_orient,
+                                   validation_technique=args.validation_technique)
         if args.tune:
             split_idx = dataset.get_tune_idx_split()
         else:
