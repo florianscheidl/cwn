@@ -347,7 +347,7 @@ def main(args):
                                                   args.task_type)
                 wandb.log({"test_loss": epoch_test_loss, "test_perf": test_perf})
             else:
-                UserWarning("Test Loader is None!")
+                print("Test Loader is None!")
                 test_perf = np.nan
                 epoch_test_loss = np.nan
             test_curve.append(test_perf)
