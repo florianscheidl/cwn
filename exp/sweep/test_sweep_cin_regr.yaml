@@ -8,7 +8,7 @@ command:
   - "--dump_curves"
   # if we do regression, we additionally want "--minimize"
 
-method: random
+method: grid
 parameters:
 
   # Randomness
