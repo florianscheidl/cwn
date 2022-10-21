@@ -19,7 +19,7 @@ parameters:
   dataset:
     values: [MOLHIV] # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
   task_type:
-    value: classification
+    value: bin_classification
   eval_metric:
     value: ogbg-molhiv # specified for ogb datasets, for others: accuracy. Could support additional metrics, e.g. ROC-AUC.
 
