@@ -16,7 +16,7 @@ parameters:
     values: [0]
   # dataset:
   dataset:
-    values: [ZINC, Qm9]
+    value: ZINC # does not appear as TUDataset: Qm9
   task_type:
     value: regression
   eval_metric:

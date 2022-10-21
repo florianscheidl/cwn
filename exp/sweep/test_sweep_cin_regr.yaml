@@ -17,7 +17,7 @@ parameters:
 
   # dataset:
   dataset:
-    values: [ZINC, Qm9]
+    value: ZINC
   task_type:
     value: regression
   eval_metric:
