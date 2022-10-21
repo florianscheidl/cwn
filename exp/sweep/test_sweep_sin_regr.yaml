@@ -6,6 +6,7 @@ command:
   - ${args} # args
   - "--use_edge_features"
   - "--dump_curves"
+  - "--minimize"
   # if we do regression, we additionally want "--minimize"
 
 method: grid
