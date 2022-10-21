@@ -71,7 +71,8 @@ class TUDataset(InMemoryComplexDataset):
                 self.val_ids = val_ids
             self.test_ids = None
         elif validation_technique=='random_splits':
-            self.train_ids, test_val_ids = train_test_split(len(self), test_size=0.2, random_state=seed)
+            print(self)
+            self.train_ids, test_val_ids = train_test_split(range(len(self.data)), test_size=0.2, random_state=seed)
             self.val_ids, self.test_ids = train_test_split(test_val_ids, test_size=0.5, random_state=seed)
         else:
             raise ValueError('Unknown validation technique.')
