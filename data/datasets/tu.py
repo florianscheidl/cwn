@@ -26,7 +26,7 @@ def load_tu_graph_dataset(name, root=os.path.join(ROOT_DIR, 'datasets'), degree_
     test_filename = os.path.join(raw_dir, '10fold_idx', 'test_idx-{}.txt'.format(fold + 1))
     if os.path.isfile(train_filename) and os.path.isfile(test_filename):
         # NB: we consider the loaded test indices as val_ids ones and set test_ids to None
-        #     to make it more convenient to work with the training pipeline
+        #     to make it more convenient to work with the training pipeline -> # TODO: I changed this to include test indices.
         train_ids = np.loadtxt(train_filename, dtype=int).tolist()
         val_ids = np.loadtxt(test_filename, dtype=int).tolist()
     else:
@@ -71,8 +71,8 @@ class TUDataset(InMemoryComplexDataset):
                 self.val_ids = val_ids
             self.test_ids = None
         elif validation_technique=='random_splits':
-            self.train_ids, self.val_ids = train_test_split(len(self), test_size=0.1, random_state=seed)
-            self.test_ids = None
+            self.train_ids, test_val_ids = train_test_split(len(self), test_size=0.2, random_state=seed)
+            self.val_ids, self.test_ids = train_test_split(test_val_ids, test_size=0.5, random_state=seed)
         else:
             raise ValueError('Unknown validation technique.')
 
