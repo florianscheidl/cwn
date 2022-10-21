@@ -65,9 +65,11 @@ def main(args):
         valid_loader = PyGDataLoader(val_graphs, batch_size=args.batch_size,
                                    shuffle=False, num_workers=args.num_workers)
         if test_ids is not None:
+            print("Test ids are not None")
             test_graphs = [graph_list[i] for i in test_ids]
             test_loader = PyGDataLoader(test_graphs, batch_size=args.batch_size,
                                        shuffle=False, num_workers=args.num_workers)
+            print("Getting test loader from PyG data loader.")
         else:
             test_loader = None
         if args.dataset.startswith('sr'):
@@ -99,6 +101,7 @@ def main(args):
         test_split = split_idx.get("test", None)
         test_loader = None
         if test_split is not None:
+            print("Getting test loader from dataset test split.")
             test_loader = DataLoader(dataset.get_split('test'), batch_size=args.batch_size,
                 shuffle=False, num_workers=args.num_workers, max_dim=dataset.max_dim)
 
@@ -344,6 +347,7 @@ def main(args):
                                                   args.task_type)
                 wandb.log({"test_loss": epoch_test_loss, "test_perf": test_perf})
             else:
+                UserWarning("Test Loader is None!")
                 test_perf = np.nan
                 epoch_test_loss = np.nan
             test_curve.append(test_perf)

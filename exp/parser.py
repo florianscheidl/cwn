@@ -48,9 +48,9 @@ def get_parser():
                         help='input batch size for training (default: 32)')
     parser.add_argument('--epochs', type=int, default=100,
                         help='number of epochs to train (default: 100)')
-    parser.add_argument('--fold', type=int, default=None,
+    parser.add_argument('--fold', type=int, default=0,
                         help='fold index for k-fold cross-validation experiments')
-    parser.add_argument('--folds', type=int, default=None,
+    parser.add_argument('--folds', type=int, default=1,
                         help='The number of folds to run on in cross validation experiments if validation_technique is k-fold CV, otherwise number of random repetitions of datset splitting.')
     parser.add_argument('--train_eval_period', type=int, default=10,
                         help='How often to evaluate on train.')
