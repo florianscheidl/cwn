@@ -149,6 +149,7 @@ def construct_features(vx: Tensor, cell_tables, init_method: str) -> List:
             aux_0 += cell
         node_cell_index = torch.LongTensor([aux_0, aux_1])
         in_features = vx.index_select(0, node_cell_index[0])
+        print("Node cell index: ", node_cell_index[1], 'Len cell tables: ', len(cell_tables[dim]), "init_method: ", init_method)
         features.append(scatter(in_features, node_cell_index[1], dim=0,
                                 dim_size=len(cell_tables[dim]), reduce=init_method))
 
