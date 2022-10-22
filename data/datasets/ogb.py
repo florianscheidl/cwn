@@ -19,8 +19,11 @@ class OGBDataset(InMemoryComplexDataset):
         self._use_edge_features = use_edge_features
         self._simple = simple
         self._n_jobs = n_jobs
+        self._cellular = True
+        if self._max_dim >2:
+            self._cellular = False
         super(OGBDataset, self).__init__(root, transform, pre_transform, pre_filter,
-                                         max_dim=self._max_dim, init_method=init_method, cellular=True)
+                                         max_dim=self._max_dim, init_method=init_method, cellular=self._cellular)
         self.data, self.slices, idx, self.num_tasks = self.load_dataset()
         self.train_ids = idx['train']
         self.val_ids = idx['valid']

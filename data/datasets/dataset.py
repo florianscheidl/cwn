@@ -137,8 +137,8 @@ class InMemoryComplexDataset(ComplexDataset):
                  pre_filter=None, max_dim: int = None, num_classes: int = None,
                  include_down_adj=False, init_method=None, cellular: bool = False):
         self.include_down_adj = include_down_adj
-        super(InMemoryComplexDataset, self).__init__(root, transform, pre_transform, pre_filter,
-                                                     max_dim, num_classes, init_method=init_method,
+        super(InMemoryComplexDataset, self).__init__(root=root, transform=transform, pre_transform=pre_transform, pre_filter=pre_filter,
+                                                     max_dim=max_dim, num_classes=num_classes, init_method=init_method,
                                                      cellular=cellular)
         self.data, self.slices = None, None
         self.__data_list__ = None
