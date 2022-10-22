@@ -69,6 +69,7 @@ class ZincDataset(InMemoryComplexDataset):
                 init_rings=False,
                 n_jobs=self._n_jobs)
         else:
+            print(self._init_method)
             train_complexes, _, _ = convert_graph_dataset_with_gudhi(
                 train_data,
                 expansion_dim=self._max_dim,

@@ -149,7 +149,7 @@ def construct_features(vx: Tensor, cell_tables, init_method: str) -> List:
             aux_0 += cell
         node_cell_index = torch.LongTensor([aux_0, aux_1])
         in_features = vx.index_select(0, node_cell_index[0])
-        print("Node cell index: ", node_cell_index[1], 'Len cell tables: ', len(cell_tables[dim]), "init_method: ", init_method)
+        print("In construct_features.\n Node cell index: ", node_cell_index[1], 'Len cell tables: ', len(cell_tables[dim]), "init_method: ", init_method)
         features.append(scatter(in_features, node_cell_index[1], dim=0,
                                 dim_size=len(cell_tables[dim]), reduce=init_method))
 
@@ -240,6 +240,7 @@ def compute_clique_complex_with_gudhi(x: Tensor, edge_index: Adj, size: int,
     assert x is not None
     assert isinstance(edge_index, Tensor)  # Support only tensor edge_index for now
 
+    print("In compute_clique_complex_with_gudhi: init_method = ", init_method)
     # Creates the gudhi-based simplicial complex
     simplex_tree = pyg_to_simplex_tree(edge_index, size)
     simplex_tree.expansion(expansion_dim)  # Computes the clique complex up to the desired dim.
@@ -279,6 +280,7 @@ def convert_graph_dataset_with_gudhi(dataset, expansion_dim: int, include_down_a
     dimension = -1
     complexes = []
     num_features = [None for _ in range(expansion_dim+1)]
+    print("In convert_graph_dataset_with_gudhi: init_method = ", init_method)
 
     for data in tqdm(dataset):
         complex = compute_clique_complex_with_gudhi(data.x, data.edge_index, data.num_nodes,
