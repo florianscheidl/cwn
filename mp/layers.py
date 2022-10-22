@@ -188,9 +188,9 @@ class SparseCINCochainConv(CochainMessagePassing):
                                               boundary_attr=cochain.kwargs['boundary_attr'])
 
         # As in GIN, we can learn an injective update function for each multi-set
-        print("TYPE ERROR INVESTIGATION: ", self.eps1, cochain.x)
-        out_up += (1 + self.eps1) * cochain.x
-        out_boundaries += (1 + self.eps2) * cochain.x
+        print("TYPE ERROR INVESTIGATION: ", self.eps1, cochain.x.float())
+        out_up += (1 + self.eps1) * cochain.x.float()
+        out_boundaries += (1 + self.eps2) * cochain.x.float()
         out_up = self.update_up_nn(out_up)
         out_boundaries = self.update_boundaries_nn(out_boundaries)
 
