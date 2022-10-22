@@ -1,7 +1,7 @@
 import torch
 import os.path as osp
 
-from data.utils import convert_graph_dataset_with_rings
+from data.utils import convert_graph_dataset_with_rings, convert_graph_dataset_with_gudhi
 from data.datasets import InMemoryComplexDataset
 from torch_geometric.datasets import ZINC
 
@@ -10,14 +10,15 @@ class ZincDataset(InMemoryComplexDataset):
     """This is ZINC from the Benchmarking GNNs paper. This is a graph regression task."""
 
     def __init__(self, root, max_ring_size, use_edge_features=False, transform=None,
-                 pre_transform=None, pre_filter=None, subset=True, n_jobs=2):
+                 pre_transform=None, pre_filter=None, subset=True, n_jobs=2, max_dim: int = 2):
         self.name = 'ZINC'
         self._max_ring_size = max_ring_size
         self._use_edge_features = use_edge_features
         self._subset = subset
         self._n_jobs = n_jobs
+        self._max_dim = max_dim
         super(ZincDataset, self).__init__(root, transform, pre_transform, pre_filter,
-                                          max_dim=2, cellular=True, num_classes=1)
+                                          max_dim=self._max_dim, cellular=True, num_classes=1)
 
         self.data, self.slices, idx = self.load_dataset()
         self.train_ids = idx[0]
@@ -58,35 +59,63 @@ class ZincDataset(InMemoryComplexDataset):
         idx = []
         start = 0
         print("Converting the train dataset to a cell complex...")
-        train_complexes, _, _ = convert_graph_dataset_with_rings(
-            train_data,
-            max_ring_size=self._max_ring_size,
-            include_down_adj=self.include_down_adj,
-            init_edges=self._use_edge_features,
-            init_rings=False,
-            n_jobs=self._n_jobs)
+        if self._max_dim == 2:
+            train_complexes, _, _ = convert_graph_dataset_with_rings(
+                train_data,
+                max_ring_size=self._max_ring_size,
+                include_down_adj=self.include_down_adj,
+                init_edges=self._use_edge_features,
+                init_rings=False,
+                n_jobs=self._n_jobs)
+        else:
+            train_complexes, _, _ = convert_graph_dataset_with_gudhi(
+                train_data,
+                expansion_dim=self._max_dim,
+                include_down_adj=self.include_down_adj,
+                init_method=self._init_method)
+
         data_list += train_complexes
         idx.append(list(range(start, len(data_list))))
         start = len(data_list)
+
         print("Converting the validation dataset to a cell complex...")
-        val_complexes, _, _ = convert_graph_dataset_with_rings(
-            val_data,
-            max_ring_size=self._max_ring_size,
-            include_down_adj=self.include_down_adj,
-            init_edges=self._use_edge_features,
-            init_rings=False,
-            n_jobs=self._n_jobs)
+
+        if self._max_dim == 2:
+            val_complexes, _, _ = convert_graph_dataset_with_rings(
+                val_data,
+                max_ring_size=self._max_ring_size,
+                include_down_adj=self.include_down_adj,
+                init_edges=self._use_edge_features,
+                init_rings=False,
+                n_jobs=self._n_jobs)
+        else:
+            val_complexes , _, _ = convert_graph_dataset_with_gudhi(
+                val_data,
+                expansion_dim=self._max_dim,
+                include_down_adj=self.include_down_adj,
+                init_method=self._init_method)
+
         data_list += val_complexes
         idx.append(list(range(start, len(data_list))))
         start = len(data_list)
+
         print("Converting the test dataset to a cell complex...")
-        test_complexes, _, _ = convert_graph_dataset_with_rings(
-            test_data,
-            max_ring_size=self._max_ring_size,
-            include_down_adj=self.include_down_adj,
-            init_edges=self._use_edge_features,
-            init_rings=False,
-            n_jobs=self._n_jobs)
+
+        if self._max_dim == 2:
+            test_complexes, _, _ = convert_graph_dataset_with_rings(
+                test_data,
+                max_ring_size=self._max_ring_size,
+                include_down_adj=self.include_down_adj,
+                init_edges=self._use_edge_features,
+                init_rings=False,
+                n_jobs=self._n_jobs)
+        else:
+            test_complexes , _, _ = convert_graph_dataset_with_gudhi(
+                test_data,
+                expansion_dim=self._max_dim,
+                include_down_adj=self.include_down_adj,
+                init_method=self._init_method)
+
         data_list += test_complexes
         idx.append(list(range(start, len(data_list))))
 
