@@ -17,7 +17,7 @@ class ZincDataset(InMemoryComplexDataset):
         self._subset = subset
         self._n_jobs = n_jobs
         self._max_dim = max_dim
-        self._init_method = 'sum'
+        self.init_method = 'sum'
         super(ZincDataset, self).__init__(root, transform, pre_transform, pre_filter,
                                           max_dim=self._max_dim, cellular=True, num_classes=1)
 
@@ -60,6 +60,7 @@ class ZincDataset(InMemoryComplexDataset):
         idx = []
         start = 0
         print("Converting the train dataset to a cell complex...")
+        print(self.init_method)
         if self._max_dim == 2:
             train_complexes, _, _ = convert_graph_dataset_with_rings(
                 train_data,
@@ -69,12 +70,11 @@ class ZincDataset(InMemoryComplexDataset):
                 init_rings=False,
                 n_jobs=self._n_jobs)
         else:
-            print(self._init_method)
             train_complexes, _, _ = convert_graph_dataset_with_gudhi(
                 train_data,
                 expansion_dim=self._max_dim,
                 include_down_adj=self.include_down_adj,
-                init_method=self._init_method)
+                init_method=self.init_method)
 
         data_list += train_complexes
         idx.append(list(range(start, len(data_list))))
@@ -95,7 +95,7 @@ class ZincDataset(InMemoryComplexDataset):
                 val_data,
                 expansion_dim=self._max_dim,
                 include_down_adj=self.include_down_adj,
-                init_method=self._init_method)
+                init_method=self.init_method)
 
         data_list += val_complexes
         idx.append(list(range(start, len(data_list))))
@@ -116,7 +116,7 @@ class ZincDataset(InMemoryComplexDataset):
                 test_data,
                 expansion_dim=self._max_dim,
                 include_down_adj=self.include_down_adj,
-                init_method=self._init_method)
+                init_method=self.init_method)
 
         data_list += test_complexes
         idx.append(list(range(start, len(data_list))))
