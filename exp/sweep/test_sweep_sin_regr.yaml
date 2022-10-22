@@ -27,7 +27,7 @@ parameters:
   batch_size:
     value: 32
   epochs:
-    value: 1 # default: 200
+    value: 2 # default: 200
   folds:
     value: 1 # default: 10
   train_eval_period:
