@@ -17,6 +17,7 @@ class ZincDataset(InMemoryComplexDataset):
         self._subset = subset
         self._n_jobs = n_jobs
         self._max_dim = max_dim
+        self._init_method = 'sum'
         super(ZincDataset, self).__init__(root, transform, pre_transform, pre_filter,
                                           max_dim=self._max_dim, cellular=True, num_classes=1)
 
