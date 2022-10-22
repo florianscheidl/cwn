@@ -20,7 +20,7 @@ parameters:
   dataset:
     value: ZINC
   task_type:
-    value: regression
+    value: mse_regression
   eval_metric:
     value: mae # specified for ogb datasets, for others: accuracy. Could support additional metrics, e.g. ROC-AUC.
 
