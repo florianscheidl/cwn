@@ -1,0 +1,85 @@
+program: exp.run_exp
+command:
+  - ${interpreter}
+  - "-m"
+  - ${program}
+  - ${args} # args
+  - "--use_edge_features"
+  - "--dump_curves"
+  # if we do regression, we additionally want "--minimize"
+
+method: grid
+parameters:
+
+  # Randomness
+  seed:
+    values: [0,1,2]
+
+  # dataset:
+  dataset:
+    values: [PTC] # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
+  task_type:
+    value: classification
+  eval_metric:
+    value: accuracy # specified for ogb datasets, for others: accuracy. Could support additional metrics, e.g. ROC-AUC.
+
+  # training
+  batch_size:
+    value: 16
+  epochs:
+    value: 150 # default: 200
+  folds:
+    value: 1 # default: 10
+  fold:
+    value: 0
+  train_eval_period:
+    value: 10
+  validation_technique:
+    value: random_splits
+
+  # NN parameters
+  nonlinearity:
+    value: prelu
+  graph_norm:
+    value: bn
+
+  # GNN Specific params
+  emb_dim:
+    value: 64
+  num_layers:
+    value: 3
+  readout:
+    value: sum
+  final_readout:
+    value: sum
+
+  # Model-specific GNN params:
+  model:
+    values: [cin, sparse_cin]
+  use_coboundaries:
+    value: False
+  max_dim:
+    value: 2
+  max_ring_size:
+    value: 7
+  init_method:
+    value: sum
+
+  # Regularization
+  drop_rate:
+    value: '0.0'
+
+  # Optimizer
+  lr:
+    value: '0.001'
+  lr_scheduler:
+    value: StepLR
+  lr_scheduler_decay_steps:
+    value: 150
+  lr_scheduler_decay_rate:
+    value: '0.5'
+  lr_scheduler_patience:
+    value: 10
+  lr_scheduler_min_lr:
+    value: 1e-5
+
