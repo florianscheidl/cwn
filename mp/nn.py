@@ -8,6 +8,9 @@ def get_nonlinearity(nonlinearity, return_module=True):
     if nonlinearity == 'relu':
         module = torch.nn.ReLU
         function = F.relu
+    elif nonlinearity == 'prelu':
+        module = torch.nn.PReLU
+        function = F.prelu
     elif nonlinearity == 'elu':
         module = torch.nn.ELU
         function = F.elu
