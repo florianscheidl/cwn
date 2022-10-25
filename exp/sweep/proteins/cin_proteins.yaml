@@ -39,7 +39,7 @@ parameters:
 
   # NN parameters
   nonlinearity:
-    value: prelu
+    value: relu
   graph_norm:
     value: bn
 

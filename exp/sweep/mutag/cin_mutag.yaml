@@ -25,7 +25,7 @@ parameters:
 
   # training
   batch_size:
-    value: 16
+    value: 32
   epochs:
     value: 150 # default: 200
   folds:
@@ -71,11 +71,11 @@ parameters:
 
   # Optimizer
   lr:
-    value: '0.001'
+    value: '0.01'
   lr_scheduler:
     value: StepLR
   lr_scheduler_decay_steps:
-    value: 150
+    value: 20
   lr_scheduler_decay_rate:
     value: '0.5'
   lr_scheduler_patience:
