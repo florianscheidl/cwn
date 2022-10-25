@@ -17,7 +17,7 @@ parameters:
 
   # dataset:
   dataset:
-    value: PROTEINS # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
+    value: IMDB-B # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
   task_type:
     value: classification
   eval_metric:
@@ -45,9 +45,9 @@ parameters:
 
   # GNN Specific params
   emb_dim:
-    value: 32
+    value: 16
   num_layers:
-    value: 3
+    value: 4
   readout:
     value: sum
   final_readout:
@@ -66,20 +66,20 @@ parameters:
   # Regularization
   drop_rate:
     value: '0.0'
+  drop_position:
+    value: 'final_readout'
 
   # Optimizer
   lr:
-    value: '0.01'
+    value: '0.001'
   lr_scheduler:
     value: StepLR
   lr_scheduler_decay_steps:
-    value: 20
+    value: 50
   lr_scheduler_decay_rate:
     value: '0.5'
   lr_scheduler_patience:
     value: 10
   lr_scheduler_min_lr:
     value: 1e-5
-
-
 

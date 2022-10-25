@@ -17,7 +17,7 @@ parameters:
 
   # dataset:
   dataset:
-    values: [MUTAG] # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
+    value: MUTAG # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
   task_type:
     value: classification
   eval_metric:
@@ -47,7 +47,7 @@ parameters:
   emb_dim:
     value: 64
   num_layers:
-    value: 3
+    value: 4
   readout:
     value: sum
   final_readout:
@@ -55,19 +55,19 @@ parameters:
 
   # Model-specific GNN params:
   model:
-    values: [cin, sparse_cin]
+    value: sparse_cin
   use_coboundaries:
     value: False
   max_dim:
     value: 2
   max_ring_size:
-    value: 7
+    value: 8
   init_method:
     value: sum
 
-  # Regularization
+  # Regularization : other datasets -> before final readout.
   drop_rate:
-    value: '0.0'
+    value: '0.5'
 
   # Optimizer
   lr:

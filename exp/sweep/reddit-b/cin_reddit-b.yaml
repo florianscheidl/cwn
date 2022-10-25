@@ -17,7 +17,7 @@ parameters:
 
   # dataset:
   dataset:
-    value: PROTEINS # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
+    value: REDDITBINARY # [MUTAG, PROTEINS, IMDBMULTI, NCI109, PTC, REDDITMULTI5K, MOLHIV]
   task_type:
     value: classification
   eval_metric:
@@ -25,7 +25,7 @@ parameters:
 
   # training
   batch_size:
-    value: 128
+    value: 32
   epochs:
     value: 150 # default: 200
   folds:
@@ -45,9 +45,9 @@ parameters:
 
   # GNN Specific params
   emb_dim:
-    value: 32
+    value: 64
   num_layers:
-    value: 3
+    value: 4
   readout:
     value: sum
   final_readout:
@@ -57,29 +57,31 @@ parameters:
   model:
     value: sparse_cin
   use_coboundaries:
-    value: True
+    value: False
   max_dim:
-    value: 3
+    value: 2
+  max_ring_size:
+    value: 8
   init_method:
     value: mean
 
   # Regularization
   drop_rate:
     value: '0.0'
+  drop_position:
+    value: 'final_readout'
 
   # Optimizer
   lr:
-    value: '0.01'
+    value: '0.001'
   lr_scheduler:
     value: StepLR
   lr_scheduler_decay_steps:
-    value: 20
+    value: 50
   lr_scheduler_decay_rate:
     value: '0.5'
   lr_scheduler_patience:
     value: 10
   lr_scheduler_min_lr:
     value: 1e-5
-
-
 
