@@ -61,7 +61,7 @@ parameters:
   max_dim:
     value: 2
   max_ring_size:
-    value: 8
+    value: 5
   init_method:
     value: mean
 
