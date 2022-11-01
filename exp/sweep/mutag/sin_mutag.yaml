@@ -59,7 +59,7 @@ parameters:
   use_coboundaries:
     value: False
   max_dim:
-    values: [2,3]
+    value: 2
   init_method:
     value: sum
 

@@ -13,7 +13,7 @@ parameters:
 
   # Randomness
   seed:
-    values: [10,11,12,13]
+    values: [20,21,22,23,24,25,26,27,28,29]
 
   # dataset:
   dataset:
@@ -59,13 +59,13 @@ parameters:
   use_coboundaries:
     value: True
   max_dim:
-    values: [2,3]
+    value: 2
   init_method:
     value: mean
 
   # Regularization
   drop_rate:
-    value: '0.0'
+    value: '0.5'
 
   # Optimizer
   lr:

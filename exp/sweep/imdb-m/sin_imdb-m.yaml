@@ -13,7 +13,7 @@ parameters:
 
   # Randomness
   seed:
-    values: [10,11,12,13]
+    values: [20,21,22,23,24,25,26,27,28,29]
 
   # dataset:
   dataset:
@@ -59,7 +59,7 @@ parameters:
   use_coboundaries:
     value: True
   max_dim:
-    values: [2,3]
+    value: 2
   init_method:
     value: mean
 
@@ -71,11 +71,11 @@ parameters:
 
   # Optimizer
   lr:
-    value: '0.0005'
+    value: '0.003'
   lr_scheduler:
     value: StepLR
   lr_scheduler_decay_steps:
-    value: 20
+    value: 50
   lr_scheduler_decay_rate:
     value: '0.5'
   lr_scheduler_patience:

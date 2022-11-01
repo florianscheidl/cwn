@@ -13,7 +13,7 @@ parameters:
 
   # Randomness
   seed:
-    values: [10,11,12,13]
+    values: [20,21,22,23,24,25,26,27,28,29]
 
   # dataset:
   dataset:
@@ -25,7 +25,7 @@ parameters:
 
   # training
   batch_size:
-    value: 128
+    value: 32
   epochs:
     value: 150 # default: 200
   folds:
@@ -45,7 +45,7 @@ parameters:
 
   # GNN Specific params
   emb_dim:
-    value: 16
+    value: 64
   num_layers:
     value: 4
   readout:
@@ -59,13 +59,13 @@ parameters:
   use_coboundaries:
     value: True
   max_dim:
-    values: [2,3]
+    value: 2
   init_method:
     value: mean
 
   # Regularization
   drop_rate:
-    value: '0.0'
+    value: '0.5'
   drop_position:
     value: 'final_readout'
 
@@ -75,7 +75,7 @@ parameters:
   lr_scheduler:
     value: StepLR
   lr_scheduler_decay_steps:
-    value: 50
+    value: 20
   lr_scheduler_decay_rate:
     value: '0.5'
   lr_scheduler_patience:
